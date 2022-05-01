@@ -59,61 +59,35 @@ transactionHttp
   })
 }, 500)
 
-  function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-typescript-javascript/1.0.3/enums/TransactionType.html
-    if (type === 16724) return 'TRANSFER TRANSACTION'
-    return 'OTHER TRANSACTION'
-  }
+function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-typescript-javascript/1.0.3/enums/TransactionType.html
+  if (type === 16724) return 'TRANSFER TRANSACTION'
+  return 'OTHER TRANSACTION'
+}
 
-  function handleClick() {
-    const addr = document.getElementById('form-addr').value
-    const amount = document.getElementById('form-amount').value
-    const message = document.getElementById('form-message').value
-    const pk = document.getElementById('form-pk').value
-    
-    const tx = symbol.TransferTransaction.create(
-      symbol.Deadline.create(EPOCH),
-      symbol.Address.createFromRawAddress(addr),
-      [
-        new symbol.Mosaic(
-          new symbol.MosaicId(XYM_ID),
-          symbol.UInt64.fromUint(Number(amount))
-        )
-      ],
-      symbol.PlainMessage.create(message),
-      NET_TYPE,
-      symbol.UInt64.fromUint(2000000)
-    )
+function handleSSS() {
+  console.log('handle sss')
+  const addr = document.getElementById('form-addr').value
+  const amount = document.getElementById('form-amount').value
+  const message = document.getElementById('form-message').value
+  
+  const tx = symbol.TransferTransaction.create(
+    symbol.Deadline.create(EPOCH),
+    symbol.Address.createFromRawAddress(addr),
+    [
+      new symbol.Mosaic(
+        new symbol.MosaicId(XYM_ID),
+        symbol.UInt64.fromUint(Number(amount))
+      )
+    ],
+    symbol.PlainMessage.create(message),
+    NET_TYPE,
+    symbol.UInt64.fromUint(2000000)
+  )
 
-    const acc = symbol.Account.createFromPrivateKey(pk, NET_TYPE)
-    
-    const signedTx = acc.sign(tx, GENERATION_HASH)
+  window.SSS.setTransaction(tx)
 
+  window.SSS.requestSign().then(signedTx => {
+    console.log('signedTx', signedTx)
     transactionHttp.announce(signedTx)
-  }
-  function handleSSS() {
-    console.log('handle sss')
-    const addr = document.getElementById('form-addr').value
-    const amount = document.getElementById('form-amount').value
-    const message = document.getElementById('form-message').value
-    
-    const tx = symbol.TransferTransaction.create(
-      symbol.Deadline.create(EPOCH),
-      symbol.Address.createFromRawAddress(addr),
-      [
-        new symbol.Mosaic(
-          new symbol.MosaicId(XYM_ID),
-          symbol.UInt64.fromUint(Number(amount))
-        )
-      ],
-      symbol.PlainMessage.create(message),
-      NET_TYPE,
-      symbol.UInt64.fromUint(2000000)
-    )
-
-    window.SSS.setTransaction(tx)
-
-    window.SSS.requestSign().then(signedTx => {
-      console.log('signedTx', signedTx)
-      transactionHttp.announce(signedTx)
-    })
-  }
+  })
+}
