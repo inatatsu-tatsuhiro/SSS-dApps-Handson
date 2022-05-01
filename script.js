@@ -5,11 +5,9 @@ const EPOCH = 1637848847
 const XYM_ID = '3A8416DB2D53B6C8'
 const NODE_URL = 'https://sym-test.opening-line.jp:3001'
 const NET_TYPE = symbol.NetworkType.TEST_NET
-
-const address = window.SSS.activeAddress
-
-console.log("Hello Symbol")
-console.log(`Your Address : ${address.plain()}`)
+setTimeout(() => {
+  
+const address = symbol.Address.createFromRawAddress(window.SSS.activeAddress)
 
 const dom_addr = document.getElementById('wallet-addr')
 dom_addr.innerText = address.pretty()
@@ -59,62 +57,63 @@ transactionHttp
       dom_txInfo.appendChild(dom_tx)
     }
   })
+  function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-typescript-javascript/1.0.3/enums/TransactionType.html
+    if (type === 16724) return 'TRANSFER TRANSACTION'
+    return 'OTHER TRANSACTION'
+  }
 
-function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-typescript-javascript/1.0.3/enums/TransactionType.html
-  if (type === 16724) return 'TRANSFER TRANSACTION'
-  return 'OTHER TRANSACTION'
-}
+  function handleClick() {
+    const addr = document.getElementById('form-addr').value
+    const amount = document.getElementById('form-amount').value
+    const message = document.getElementById('form-message').value
+    const pk = document.getElementById('form-pk').value
+    
+    const tx = symbol.TransferTransaction.create(
+      symbol.Deadline.create(EPOCH),
+      symbol.Address.createFromRawAddress(addr),
+      [
+        new symbol.Mosaic(
+          new symbol.MosaicId(XYM_ID),
+          symbol.UInt64.fromUint(Number(amount))
+        )
+      ],
+      symbol.PlainMessage.create(message),
+      NET_TYPE,
+      symbol.UInt64.fromUint(2000000)
+    )
 
-function handleClick() {
-  const addr = document.getElementById('form-addr').value
-  const amount = document.getElementById('form-amount').value
-  const message = document.getElementById('form-message').value
-  const pk = document.getElementById('form-pk').value
-  
-  const tx = symbol.TransferTransaction.create(
-    symbol.Deadline.create(EPOCH),
-    symbol.Address.createFromRawAddress(addr),
-    [
-      new symbol.Mosaic(
-        new symbol.MosaicId(XYM_ID),
-        symbol.UInt64.fromUint(Number(amount))
-      )
-    ],
-    symbol.PlainMessage.create(message),
-    NET_TYPE,
-    symbol.UInt64.fromUint(2000000)
-  )
+    const acc = symbol.Account.createFromPrivateKey(pk, NET_TYPE)
+    
+    const signedTx = acc.sign(tx, GENERATION_HASH)
 
-  const acc = symbol.Account.createFromPrivateKey(pk, NET_TYPE)
-  
-  const signedTx = acc.sign(tx, GENERATION_HASH)
-
-  transactionHttp.announce(signedTx)
-}
-function handleSSS() {
-  console.log('handle sss')
-  const addr = document.getElementById('form-addr').value
-  const amount = document.getElementById('form-amount').value
-  const message = document.getElementById('form-message').value
-  
-  const tx = symbol.TransferTransaction.create(
-    symbol.Deadline.create(EPOCH),
-    symbol.Address.createFromRawAddress(addr),
-    [
-      new symbol.Mosaic(
-        new symbol.MosaicId(XYM_ID),
-        symbol.UInt64.fromUint(Number(amount))
-      )
-    ],
-    symbol.PlainMessage.create(message),
-    NET_TYPE,
-    symbol.UInt64.fromUint(2000000)
-  )
-
-  window.SSS.setTransaction(tx)
-
-  window.SSS.requestSign().then(signedTx => {
-    console.log('signedTx', signedTx)
     transactionHttp.announce(signedTx)
-  })
-}
+  }
+  function handleSSS() {
+    console.log('handle sss')
+    const addr = document.getElementById('form-addr').value
+    const amount = document.getElementById('form-amount').value
+    const message = document.getElementById('form-message').value
+    
+    const tx = symbol.TransferTransaction.create(
+      symbol.Deadline.create(EPOCH),
+      symbol.Address.createFromRawAddress(addr),
+      [
+        new symbol.Mosaic(
+          new symbol.MosaicId(XYM_ID),
+          symbol.UInt64.fromUint(Number(amount))
+        )
+      ],
+      symbol.PlainMessage.create(message),
+      NET_TYPE,
+      symbol.UInt64.fromUint(2000000)
+    )
+
+    window.SSS.setTransaction(tx)
+
+    window.SSS.requestSign().then(signedTx => {
+      console.log('signedTx', signedTx)
+      transactionHttp.announce(signedTx)
+    })
+  }
+
+}, 500)
