@@ -5,15 +5,17 @@ const EPOCH = 1637848847
 const XYM_ID = '3A8416DB2D53B6C8'
 const NODE_URL = 'https://sym-test.opening-line.jp:3001'
 const NET_TYPE = symbol.NetworkType.TEST_NET
+
+const repositoryFactory = new symbol.RepositoryFactoryHttp(NODE_URL)
+const accountHttp = repositoryFactory.createAccountRepository()
+const transactionHttp = repositoryFactory.createTransactionRepository()
+
 setTimeout(() => {
   
 const address = symbol.Address.createFromRawAddress(window.SSS.activeAddress)
 
 const dom_addr = document.getElementById('wallet-addr')
 dom_addr.innerText = address.pretty()
-
-const repositoryFactory = new symbol.RepositoryFactoryHttp(NODE_URL)
-const accountHttp = repositoryFactory.createAccountRepository()
 
 accountHttp.getAccountInfo(address)
   .toPromise()
@@ -25,8 +27,6 @@ accountHttp.getAccountInfo(address)
       }
     }
   })
-
-const transactionHttp = repositoryFactory.createTransactionRepository()
 const searchCriteria = {
   group: symbol.TransactionGroup.Confirmed,
   address,
