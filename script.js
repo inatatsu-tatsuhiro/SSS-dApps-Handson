@@ -92,6 +92,7 @@ function handleClick() {
   transactionHttp.announce(signedTx)
 }
 function handleSSS() {
+  console.log('handle sss')
   const addr = document.getElementById('form-addr').value
   const amount = document.getElementById('form-amount').value
   const message = document.getElementById('form-message').value
