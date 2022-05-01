@@ -28,9 +28,42 @@ accountHttp.getAccountInfo(address)
     }
   })
 
+const transactionHttp = repositoryFactory.createTransactionRepository()
+const searchCriteria = {
+  group: symbol.TransactionGroup.Confirmed,
+  address,
+  pageNumber: 1,
+  pageSize: 20,
+  order: symbol.Order.Desc,
+}
 
+transactionHttp
+  .search(searchCriteria)
+  .toPromise()
+  .then((txs) => {
+    console.log(txs)
+    const dom_txInfo = document.getElementById('wallet-transactions')
+    for (let tx of txs.data) {
+      console.log(tx)
+      const dom_tx = document.createElement('div')
+      const dom_txType = document.createElement('div')
+      const dom_hash = document.createElement('div')
 
+      dom_txType.innerText = `Transaction Type : ${getTransactionType(tx.type)}`
+      dom_hash.innerText = `Transaction Hash : ${tx.transactionInfo.hash}`
 
+      dom_tx.appendChild(dom_txType)
+      dom_tx.appendChild(dom_hash)
+      dom_tx.appendChild(document.createElement('hr'))
+
+      dom_txInfo.appendChild(dom_tx)
+    }
+  })
+
+function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-typescript-javascript/1.0.3/enums/TransactionType.html
+  if (type === 16724) return 'TRANSFER TRANSACTION'
+  return 'OTHER TRANSACTION'
+}
 
 // ================================================================
 
