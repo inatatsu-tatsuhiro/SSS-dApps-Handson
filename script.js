@@ -116,6 +116,7 @@ function handleSSS() {
   window.SSS.setTransaction(tx)
 
   window.SSS.requestSign().then(signedTx => {
+    console.log('signedTx', signedTx)
     transactionHttp.announce(signedTx)
   })
 
