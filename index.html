@@ -8,19 +8,39 @@
   <h1>SSS My Wallet</h1>
   
   <div class="wrapper">
-      <div class="account-card">
-        <h2>Account Info</h2>
-        <div class="container">
-          <div>Address</div>
-          <div id="wallet-addr"></div>
+      <div class="left">
+        <div class="account-card">
+          <h2>Account Info</h2>
+          <div class="container">
+            <div>Address</div>
+            <div id="wallet-addr"></div>
+          </div>
+          <div class="container">
+            <div id="wallet-xym"></div>
+          </div>
         </div>
-        <div class="container">
-          <div id="wallet-xym"></div>
+        <div class="sender-card">
+          <h2>SEND</h2>
+          <div class="textfiled-wrapper">
+            <div>TO: </div>
+            <input type="text" id="form-addr" class="textfiled" />
+          </div>
+          <div class="textfiled-wrapper">
+            <div>AMOUNT: </div>
+            <input type="text" id="form-amount" class="textfiled" />
+          </div>
+          <div class="textfiled-wrapper">
+            <div>MESSAGE: </div>
+            <input type="text" id="form-message" class="textfiled" />
+          </div>
+          <input type="button" onclick="handleClick();" value="送信"/>
         </div>
       </div>
-      <div class="tx-card">
-        <h2>Transactions</h2>
-        <div id="wallet-transactions"></div>
+      <div class="right">
+        <div class="tx-card">
+          <h2>Transactions</h2>
+          <div id="wallet-transactions"></div>
+        </div>
       </div>
   </div>
 

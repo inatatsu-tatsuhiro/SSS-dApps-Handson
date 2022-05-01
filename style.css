@@ -9,19 +9,43 @@ h1 {
   margin-right: 80px;
 }
 
+.left {
+  width: 800px;
+}
+.right {
+  width: 100%;
+}
+
 .account-card {
   background: white;
   border-radius: 16px;
-  padding: 32px;
-  width: 600px;
   margin: 16px;
+  padding: 16px;
 }
+
+.sender-card {
+  background: white;
+  border-radius: 16px;
+  margin: 16px;
+  padding: 16px;
+}
+
 .tx-card {
   background: white;
   border-radius: 16px;
   padding: 32px;
-  width: 100%;
+  width: 1200px;
   margin: 16px;
+}
+
+.textfiled-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px;
+}
+
+.textfiled {
+  width: 400px;
 }
 
 #wallet-addr {
@@ -36,5 +60,5 @@ h1 {
 .wrapper {
   display: flex;
   justify-content: space-between;
-  margin: 0px 80px;
+  margin: 80px;
 }

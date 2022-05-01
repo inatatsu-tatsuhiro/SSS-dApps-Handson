@@ -65,11 +65,31 @@ function getTransactionType (type) { // https://symbol.github.io/symbol-sdk-type
   return 'OTHER TRANSACTION'
 }
 
-// ================================================================
+function handleClick() {
+  const addr = document.getElementById('form-addr').value
+  const amount = document.getElementById('form-amount').value
+  const message = document.getElementById('form-message').value
+  const a = symbol.Address.createFromRawAddress(addr)
+  
+  const tx = symbol.TransferTransaction.create(
+    symbol.Deadline.create(EPOCH),
+    address,
+    [
+      new symbol.Mosaic(
+        new symbol.MosaicId(XYM_ID),
+        symbol.UInt64.fromUint(Number(amount))
+      )
+    ],
+    symbol.PlainMessage.create(message),
+    NET_TYPE,
+    symbol.UInt64.fromUint(2000000)
+  )
 
-// function handleClick() {
-//   const addr = document.getElementById('addr-input').value
-//   console.log('clicked script', addr)
-//   const a = symbol.Address.createFromRawAddress(addr);
-//   console.log(a)
-// }
+  const pk = '===== PRIVATE KEY ====='
+
+  const acc = symbol.Account.createFromPrivateKey(pk, NET_TYPE)
+  
+  const signedTx = acc.sign(tx, GENERATION_HASH)
+
+  transactionHttp.announce(signedTx)
+}
