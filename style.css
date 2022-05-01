@@ -1,0 +1,40 @@
+body {
+  background: rgb(242, 242, 242);
+}
+
+h1 {
+  color:rgba(22, 22, 22, 0.4);
+  font-size: 96px;
+  text-align: right;
+  margin-right: 80px;
+}
+
+.account-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  width: 600px;
+  margin: 16px;
+}
+.tx-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  margin: 16px;
+}
+
+#wallet-addr {
+  font-size: 24px;
+}
+
+.container {
+  font-size: 24px;
+  margin: 16px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 80px;
+}

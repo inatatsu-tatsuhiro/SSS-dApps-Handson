@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>SSS My Wallet</title>
+  <title>SSS My Wallet></title>
+  <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
   <h1>SSS My Wallet</h1>
+  
+  <div class="wrapper">
+      <div class="account-card">
+        <h2>Account Info</h2>
+        <div class="container">
+          <div>Address</div>
+          <div id="wallet-addr"></div>
+        </div>
+        <div class="container">
+          <div id="wallet-xym"></div>
+        </div>
+      </div>
+      <div class="tx-card">
+        <h2>Transactions</h2>
+        
+      </div>
+  </div>
+
+  <script type="text/javascript" src="https://xembook.github.io/nem2-browserify/symbol-sdk-pack-1.0.3.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
