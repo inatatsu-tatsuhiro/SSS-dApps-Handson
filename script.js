@@ -99,7 +99,7 @@ function handleSSS() {
   
   const tx = symbol.TransferTransaction.create(
     symbol.Deadline.create(EPOCH),
-    addr,
+    symbol.Address.createFromRawAddress(addr),
     [
       new symbol.Mosaic(
         new symbol.MosaicId(XYM_ID),
