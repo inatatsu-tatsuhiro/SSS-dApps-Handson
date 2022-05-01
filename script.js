@@ -6,7 +6,7 @@ const XYM_ID = '3A8416DB2D53B6C8'
 const NODE_URL = 'https://sym-test.opening-line.jp:3001'
 const NET_TYPE = symbol.NetworkType.TEST_NET
 
-const address = symbol.Address.createFromRawAddress("TAD7Q3FEN5CZRZFE3WX6TWEESATVTMJDS2ETVTY")
+const address = window.SSS.activeAddress
 
 console.log("Hello Symbol")
 console.log(`Your Address : ${address.plain()}`)
@@ -97,11 +97,9 @@ function handleSSS() {
   const amount = document.getElementById('form-amount').value
   const message = document.getElementById('form-message').value
   
-  const a = symbol.Address.createFromRawAddress(addr)
-  console.log(a)
   const tx = symbol.TransferTransaction.create(
     symbol.Deadline.create(EPOCH),
-    a,
+    symbol.Address.createFromRawAddress(addr),
     [
       new symbol.Mosaic(
         new symbol.MosaicId(XYM_ID),
@@ -119,11 +117,4 @@ function handleSSS() {
     console.log('signedTx', signedTx)
     transactionHttp.announce(signedTx)
   })
-
-  // setTimeout(() => {
-  //   window.SSS.requestSign().then(signedTx => {
-  //     transactionHttp.announce(signedTx)
-  //   })
-  // }, 100)
-
 }
