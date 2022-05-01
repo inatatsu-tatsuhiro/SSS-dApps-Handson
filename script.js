@@ -97,9 +97,11 @@ function handleSSS() {
   const amount = document.getElementById('form-amount').value
   const message = document.getElementById('form-message').value
   
+  const a = symbol.Address.createFromRawAddress(addr)
+  console.log(a)
   const tx = symbol.TransferTransaction.create(
     symbol.Deadline.create(EPOCH),
-    symbol.Address.createFromRawAddress(addr),
+    a,
     [
       new symbol.Mosaic(
         new symbol.MosaicId(XYM_ID),
