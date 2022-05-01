@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>SSS My Wallet></title>
+  <title>SSS My Wallet</title>
   <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
@@ -33,7 +33,12 @@
             <div>MESSAGE: </div>
             <input type="text" id="form-message" class="textfiled" />
           </div>
-          <input type="button" onclick="handleClick();" value="送信"/>
+          <div class="textfiled-wrapper">
+            <div>PRIVATE KEY: </div>
+            <input type="text" id="form-pk" class="textfiled" />
+          </div>
+          <input type="button" onclick="handleClick();" value="秘密鍵で署名"/>
+          <input type="button" onclick="handleSSS();" value="SSSで署名"/>
         </div>
       </div>
       <div class="right">
