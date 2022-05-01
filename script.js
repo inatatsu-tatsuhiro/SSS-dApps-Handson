@@ -110,9 +110,16 @@ function handleSSS() {
     symbol.UInt64.fromUint(2000000)
   )
 
-  const acc = symbol.Account.createFromPrivateKey(pk, NET_TYPE)
-  
-  const signedTx = acc.sign(tx, GENERATION_HASH)
+  window.SSS.setTransaction(tx)
 
-  transactionHttp.announce(signedTx)
+  window.SSS.requestSign().then(signedTx => {
+    transactionHttp.announce(signedTx)
+  })
+
+  // setTimeout(() => {
+  //   window.SSS.requestSign().then(signedTx => {
+  //     transactionHttp.announce(signedTx)
+  //   })
+  // }, 100)
+
 }
